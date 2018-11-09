@@ -30,6 +30,7 @@ MarkupSafe==1.0
 mccabe==0.6.1
 numpy==1.14.3
 packaging==17.1
+mod==0.2.4
 pandas==0.22.0
 parso==0.3.1
 pexpect==4.6.0

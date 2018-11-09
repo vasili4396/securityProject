@@ -1,8 +1,8 @@
 *~
 .~*
 *.pyc
-
+*expo*
 .idea/
-project/__pycache__/
+project/__pycache__/*
 
 .vscode*
