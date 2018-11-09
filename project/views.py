@@ -1,17 +1,16 @@
 from .utils import JsonResponse, api_method
 from .forms import SecondTaskForm
 from mod import Mod
-import json
 
 
 @api_method('GET', SecondTaskForm)
 def second_task(request, form):
+
     l = form['l']
     p = form['p']
 
     l = [Mod(i, p) for i in l]
-
-    a = (l[2] - l[1]) * (l[1] - l[0]) ** (-1)
+    a = (1 // (l[1] - l[0])) * (l[2] - l[1])
     b = l[1] - a * l[0]
     l.append(a * l[2] + b)
     l.append(a * l[3] + b)
