@@ -37,3 +37,8 @@ class IntegersList(forms.CharField):
 class SecondTaskForm(forms.Form):
     l = IntegersList(required=True)
     p = forms.IntegerField()
+
+
+class FourthTaskForm(forms.Form):
+    l = IntegersList(required=True)
+    n = forms.IntegerField()
