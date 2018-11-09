@@ -43,9 +43,9 @@ def fourth_task (request, form):
             ans.append([parse_mod(i), 1])
             continue
         for j in range(count):
-            lis['between'].append([parse_mod(i), 2, j, parse_mod(i**(k*(2**j)))])
+            lis['between'].append([parse_mod(i), -1, j, parse_mod(i**(k*(2**j)))])
             if i**(k*(2**j)) == -1:
-                ans.append([parse_mod(i), 2, j])
+                ans.append([parse_mod(i), -1, j])
                 break
 
     lis['ans'] = ans
