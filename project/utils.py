@@ -44,7 +44,6 @@ class JsonResponse(object):
             'data': data,
             'info': additional_info
         }
-        print(response_data)
         return HttpResponse(json.dumps(response_data, separators=(',', ':'), ensure_ascii=False), content_type='application/json')
 
 

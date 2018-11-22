@@ -1,7 +1,6 @@
 from .utils import JsonResponse, api_method
 from .forms import *
-from mod import Mod
-import json
+from .modular_module import Mod
 
 
 def parse_mod (module):
@@ -52,3 +51,18 @@ def fourth_task (request, form):
     lis['between'] = lis['between']
 
     return JsonResponse.success(lis)
+
+
+@api_method('GET', FifthTaskForm)
+def fifth_task(request, form):
+    n = form['n']
+    e = form['e']
+    c = form['c']
+    p = form['p']
+    q = form['q']
+
+    f = (p-1)*(q-1)
+    d = 1//Mod(e, f)
+    ans = Mod(c**int(d), n)
+    d = {'ans': parse_mod(ans), 'between': [(parse_mod(d), f)]}
+    return JsonResponse.success(d)

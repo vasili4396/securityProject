@@ -42,3 +42,11 @@ class SecondTaskForm(forms.Form):
 class FourthTaskForm(forms.Form):
     l = IntegersList(required=True)
     n = forms.IntegerField()
+
+
+class FifthTaskForm(forms.Form):
+    n = forms.IntegerField()
+    e = forms.IntegerField()
+    c = forms.IntegerField()
+    p = forms.IntegerField()
+    q = forms.IntegerField()
