@@ -10,24 +10,12 @@ class JsonResponse(object):
         return cls.__base_response(200, data, additional_info)
 
     @classmethod
-    def method_error(cls, current_method, expected_method):
-        return cls.__base_error_response(
-            400,
-            'MethodException',
-            'Invalid method <{}>, expected <{}>'.format(current_method, expected_method)
-        )
-
-    @classmethod
     def value_error(cls, msg):
         return cls.__base_error_response(400, 'ValueException', msg)
 
     @classmethod
     def internal_error(cls, msg=''):
         return cls.__base_error_response(500, 'InternalError', msg)
-
-    @classmethod
-    def algo_internal_error(cls, msg=''):
-        return cls.__base_error_response(500, 'AlgorithmInternalError', msg)
 
     @classmethod
     def __base_error_response(cls, code, error_type, error_message=''):
@@ -48,29 +36,16 @@ class JsonResponse(object):
 
 
 def api_method(
-        method,
-        form_cls=None
+        form_cls
     ):
 
     def decor(func):
         @wraps(func)
         def wrapper(request, *args, **kwargs):
-
-            if request.method != method:
-                return JsonResponse.method_error(request.method, method)
-
-            form = None
-
             if form_cls is not None:
+                form_params = {}
                 if request.method == 'GET':
                     form_params = request.GET
-                elif request.method == 'POST':
-                    if "Expo" in request.META['HTTP_USER_AGENT'] or "okhttp/3.6.0" in request.META['HTTP_USER_AGENT']:
-                        form_params = json.loads(request.body.decode())
-                    else:
-                        form_params = request.POST
-                else:
-                    form_params = {}
 
                 form = form_cls(form_params)
                 if not form.is_valid():

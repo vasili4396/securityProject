@@ -7,9 +7,8 @@ def parse_mod (module):
     return '{}'.format(module)
 
 
-@api_method('GET', SecondTaskForm)
+@api_method(SecondTaskForm)
 def second_task(request, form):
-
     l = form['l']
     p = form['p']
 
@@ -24,7 +23,7 @@ def second_task(request, form):
     return JsonResponse.success(d)
 
 
-@api_method('GET', FourthTaskForm)
+@api_method(FourthTaskForm)
 def fourth_task (request, form):
     l = form['l']
     n = form['n']
@@ -53,7 +52,7 @@ def fourth_task (request, form):
     return JsonResponse.success(lis)
 
 
-@api_method('GET', FifthTaskForm)
+@api_method(FifthTaskForm)
 def fifth_task(request, form):
     n = form['n']
     e = form['e']
