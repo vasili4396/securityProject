@@ -20,7 +20,11 @@ def sqrt(n, q):
     raise Exception("not found")
 
 
-Coord = collections.namedtuple("Coord", ["x", "y"])
+class Coord(collections.namedtuple("Coord", ["x", "y"])):
+    __slots__ = ()
+
+    def __str__(self):
+        return '({}, {})'.format(self.x, self.y)
 
 
 class EC(object):

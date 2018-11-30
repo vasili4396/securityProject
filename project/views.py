@@ -82,12 +82,21 @@ def solve_eliptic(request, form):
 
     def solver_1(__x, __y, __n):
         p = Coord(__x, __y)
-        return ec.mul(p, __n)
+        return ec.mul(p, __n).__str__()
 
     def solver_2():
-        return ec.generate()
+        res = ec.generate()
+        return [item.__str__() for item in res]
 
     def solver_3(__x, __y):
-        return ec.generate_from_point(Coord(__x, __y))
+        res = ec.generate_from_point(Coord(__x, __y))
+        return [item.__str__() for item in res]
 
-    return JsonResponse.success({'status': 'ok'})
+    if task_id == 1:
+        res = solver_1(x, y, n)
+    elif task_id == 2:
+        res = solver_2()
+    else:
+        res = solver_3(x, y)
+
+    return JsonResponse.success(res)
