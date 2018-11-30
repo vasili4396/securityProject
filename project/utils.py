@@ -35,9 +35,7 @@ class JsonResponse(object):
         return HttpResponse(json.dumps(response_data, separators=(',', ':'), ensure_ascii=False), content_type='application/json')
 
 
-def api_method(
-        form_cls
-    ):
+def api_method(form_cls):
 
     def decor(func):
         @wraps(func)

@@ -1,9 +1,10 @@
 from .utils import JsonResponse, api_method
 from .forms import *
-from .modular_module import Mod
+from .maths_modules.modular_arithmetic import Mod
+from .maths_modules.eliptic import Coord, EC
 
 
-def parse_mod (module):
+def parse_mod(module):
     return '{}'.format(module)
 
 
@@ -65,3 +66,28 @@ def fifth_task(request, form):
     ans = Mod(c**int(d), n)
     d = {'ans': parse_mod(ans), 'between': [(parse_mod(d), f)]}
     return JsonResponse.success(d)
+
+
+@api_method(ElipticForm)
+def solve_eliptic(request, form):
+    task_id = form['task_id']
+    a = form['a']
+    b = form['b']
+    q = form['q']
+    x = form['x']
+    y = form['y']
+    n = form.get('n', None)
+
+    ec = EC(a, b, q)
+
+    def solver_1(__x, __y, __n):
+        p = Coord(__x, __y)
+        return ec.mul(p, __n)
+
+    def solver_2():
+        return ec.generate()
+
+    def solver_3(__x, __y):
+        return ec.generate_from_point(Coord(__x, __y))
+
+    return JsonResponse.success({'status': 'ok'})
