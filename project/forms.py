@@ -35,10 +35,10 @@ class IntegersList(forms.CharField):
 
 
 class FirstTaskForm(forms.Form):
-    x1 = forms.IntegerField()
-    x2 = forms.IntegerField()
-    z1 = forms.IntegerField()
-    z2 = forms.IntegerField()
+    x1 = forms.FloatField()
+    x2 = forms.FloatField()
+    z1 = forms.FloatField()
+    z2 = forms.FloatField()
 
 
 class SecondTaskForm(forms.Form):
