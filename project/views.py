@@ -109,29 +109,25 @@ def third_task(request, form):
 
 @api_method(FourthTaskForm)
 def fourth_task (request, form):
-    l = form['l']
-    n = form['n']
     ans = []
-    l = [Mod(i, n) for i in l]
-    k = n - 1
+    l = [Mod(form['l'][0], form['n']), Mod(form['l'][0], form['n']), Mod(form['l'][0], form['n'])]
+    k = form['n'] - 1
     count = 0
     while k % 2 == 0:
         k = k // 2
         count += 1
-    lis = {'between':[]}
+    lis = {'between': []}
     for i in l:
-        lis['between'].append([parse_mod(i), 1, parse_mod(i**k)])
-        if i**k == 1:
-            ans.append([parse_mod(i), 1])
+        lis['between'].append(['{}^{} = {} != 1'.format(i, k, i ** k)])
+        if i ** k == 1:
+            ans.append(['{}^{} = 1, значит простое'.format(i, k)])
             continue
         for j in range(count):
-            lis['between'].append([parse_mod(i), -1, j, parse_mod(i**(k*(2**j)))])
-            if i**(k*(2**j)) == -1:
-                ans.append([parse_mod(i), -1, j])
+            lis['between'].append(['{}^({}*2^{}) = {} != -1'.format(i, k, j, i ** (k * (2 ** j)))])
+            if i ** (k * (2 ** j)) == -1:
+                ans.append(['{}^({}*2^{}) = -1, значит простое'.format(i, k, j)])
                 break
-
     lis['ans'] = ans
-    lis['between'] = lis['between']
 
     return JsonResponse.success(lis)
 
