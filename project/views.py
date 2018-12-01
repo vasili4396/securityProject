@@ -110,7 +110,10 @@ def third_task(request, form):
 @api_method(FourthTaskForm)
 def fourth_task (request, form):
     ans = []
-    l = [Mod(form['l'][0], form['n']), Mod(form['l'][0], form['n']), Mod(form['l'][0], form['n'])]
+    l = []
+    for item in form['l']:
+        l.append(Mod(item, form['n']))
+    # l = [Mod(form['l'][0], form['n']), Mod(form['l'][0], form['n']), Mod(form['l'][0], form['n'])]
     k = form['n'] - 1
     count = 0
     while k % 2 == 0:
