@@ -150,6 +150,22 @@ def fifth_task(request, form):
     return JsonResponse.success(d)
 
 
+@api_method(SixthTaskForm)
+def sixth_task(request, form):
+    p, q = [i for i in prime_factors(form['n'])]
+    f = (p-1)*(q-1)
+    d = 1//Mod(form['e'], f)
+    s = Mod(form['m']**int(d), form['n'])
+    ans = [form['m'], s]
+    d = {'ans': 'ans = (m, s) = ({}, {})'.format(form['m'], s), 'between':['n = p*q = {}*{}'.format(p, q),\
+                                'f = (p-1)*(q-1) = %s' % f,\
+                                'd = e^-1 mod f = %s' % d,\
+                                's = c^d mod n = %s' % s,\
+                                'ans = (m, s) = ({}, {})'.format(form['m'], s)]}
+
+    return JsonResponse.success(d)
+
+
 @api_method(ElipticForm)
 def solve_eliptic(request, form):
     task_id = form['task_id']

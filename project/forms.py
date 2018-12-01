@@ -61,6 +61,12 @@ class FifthTaskForm(forms.Form):
     c = forms.IntegerField()
 
 
+class SixthTaskForm(forms.Form):
+    n = forms.IntegerField()
+    e = forms.IntegerField()
+    m = forms.IntegerField()
+
+
 class ElipticForm(forms.Form):
     task_id = forms.IntegerField()
     a = forms.IntegerField()
