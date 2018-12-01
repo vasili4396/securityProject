@@ -100,6 +100,7 @@ class EC(object):
 
     def generate(self):
         gen = set()
+        p = [Coord(0,0), Coord(0,0)]
         for i in range(0, self.q + 1):
             try:
                 p = self.at(i)
