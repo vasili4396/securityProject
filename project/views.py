@@ -2,6 +2,7 @@ from .utils import JsonResponse, api_method
 from .forms import *
 from .maths_modules.modular_arithmetic import Mod
 from .maths_modules.eliptic import Coord, EC
+from .maths_modules.other import *
 import numpy as np
 
 
@@ -85,6 +86,24 @@ def second_task(request, form):
            'x5 = a*x4 + b= {}'.format(l4)]
 
     d = {'ans': parse_mod((l3, l4)), 'between': lis}
+    return JsonResponse.success(d)
+
+
+@api_method(ThirdTaskForm)
+def third_task(request, form):
+    par = form['par']
+    p = len(par)//2
+    A = [par[i:p+i]+[1] for i in range(p+1)]
+    y = par[p:]
+    B = modMatInv(A,2)
+    ans = np.array(B).dot(np.array(y))%2
+    pol = ''
+    for i in range(len(ans)):
+        if ans[i]:
+            pol+='x^{}+'.format(p-i)
+    lis = ['A*x = y => x = A^-1*y', 'A = {}'.format(A), 'A^-1 = {}'.format(B), 'solv of lin sys = {}'.format(ans), pol[:-1]]
+    d = {'ans': pol[:-1],  'between': lis}
+
     return JsonResponse.success(d)
 
 
