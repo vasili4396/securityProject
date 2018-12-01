@@ -3,6 +3,6 @@
 *.pyc
 *expo*
 .idea/
-project/__pycache__/*
+__pycache__/*
 
 .vscode*
