@@ -8,5 +8,6 @@ urlpatterns = [
     path('api/fourth_task', fourth_task),
     path('api/fifth_task', fifth_task),
     path('api/sixth_task', sixth_task),
+    path('api/seventh_task', seventh_task),
     path('api/eliptic', solve_eliptic),
 ]

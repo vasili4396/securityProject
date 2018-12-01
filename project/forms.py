@@ -75,3 +75,12 @@ class ElipticForm(forms.Form):
     x = forms.IntegerField(required=False)
     y = forms.IntegerField(required=False)
     n = forms.IntegerField(required=False)
+
+
+class SeventhTaskForm(forms.Form):
+    p = forms.IntegerField()
+    g = forms.IntegerField()
+    y = forms.IntegerField()
+    x = forms.IntegerField()
+    M = forms.IntegerField()
+    k = forms.IntegerField()

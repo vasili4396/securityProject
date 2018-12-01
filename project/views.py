@@ -165,6 +165,19 @@ def sixth_task(request, form):
     return JsonResponse.success(d)
 
 
+@api_method(SeventhTaskForm)
+def seventh_task(request, form):
+    g = Mod(form['g'], form ['p'])
+    y = g**form['x']
+    a = g**form['k']
+    b = (y**form['k'])*form['M']
+    d = {'ans': '({}, {})'.format(a, b), 'between':['y = g^x = %s' % y,\
+                                'a = g^k = %s' % a,\
+                                'b = M*y^k = %s' %b,\
+                                'ans = ({}, {})'.format(a, b)]}
+    return JsonResponse.success(d)
+
+
 @api_method(ElipticForm)
 def solve_eliptic(request, form):
     task_id = form['task_id']
