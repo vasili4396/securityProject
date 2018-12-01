@@ -34,6 +34,13 @@ class IntegersList(forms.CharField):
         return value
 
 
+class FirstTaskForm(forms.Form):
+    x1 = forms.IntegerField()
+    x2 = forms.IntegerField()
+    z1 = forms.IntegerField()
+    z2 = forms.IntegerField()
+
+
 class SecondTaskForm(forms.Form):
     l = IntegersList(required=True)
     p = forms.IntegerField()

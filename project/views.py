@@ -2,10 +2,71 @@ from .utils import JsonResponse, api_method
 from .forms import *
 from .maths_modules.modular_arithmetic import Mod
 from .maths_modules.eliptic import Coord, EC
+import numpy as np
 
 
 def parse_mod(module):
     return '{}'.format(module)
+
+
+@api_method(FirstTaskForm)
+def first (request, form):
+    #set_trace()
+    def ent(l):
+        ans = 0
+        for i in l:
+            ans += -i*np.log2(i)
+        return ans
+    def ent_c(X, Y):
+        ans = 0
+        for x in X:
+            for y in Y:
+                ans += -x*y*np.log2(x*y)
+        return ans
+    def mutXY (X, Z, Y):
+        x1, x2 = X
+        z1, z2 = Z
+        y1, y2 = Y
+        return ent(X) - (-x1*z1*np.log2(x1*z1/y1)\
+                         -x1*z2*np.log2(x1*z2/y2)\
+                         -x2*z2*np.log2(x2*z2/y1)\
+                         -x2*z1*np.log2(x2*z1/y2))
+    def aps (X, Z, Y):
+        x1, x2 = X
+        z1, z2 = Z
+        y1, y2 = Y
+        ans = [x1*z1/y1, x2*z2/y1, x1*z2/y2, x2*z1/y2]
+        ans.append((ans [0] == x1)&(ans [1] == x2)&(ans [2] == x1)&(ans [3] == x2))
+        return ans
+    x1, x2, z1, z2, ans, between= form['x1'], form['x2'], form['z1'], form['z2'], [], []
+    #1
+    y1, y2 = x1*z1+x2*z2, x1*z2+x2*z1
+    ans.append((round(-np.log2(x1), 2), round(-np.log2(x2), 2)))
+    between.extend(['I(x1) = -log2(p(x1)) = {}'.format(ans[0][0]), 'I(x2) = -log2(p(x2)) = {}'.format(ans[0][1])])
+    #2
+    ans.append((round(ent([x1, x2]), 2), round(ent([z1, z2]), 2), round(ent([y1, y2]), 2)))
+    between.extend(['H(x1, x2) = -p(x1)log2(p(x1))-p(x2)log2(p(x2)) = {}'.format(ans[1][0]),\
+                    'H(z1, z2) = {}'.format(ans[1][1]),\
+                    'H(y1, y2) = {}'.format(ans[1][2])])
+    #3
+    ans.append(0)
+    between.extend(['I = 0, тк. они независимы'])
+    #4
+    ans.append(mutXY([x1, x2], [z1, z2], [y1, y2]))
+    between.extend(['I(X, Y) = S(-p(x, y)log2(p(x|y))) = {}'.format(ans[3])])
+    #5
+    ans.append(mutXY([z1, z2], [x1, x2], [y1, y2]))
+    between.extend(['I(Z, Y) = S(-p(z, y)log2(p(z|y))) = {}'.format(ans[4])])
+    #6
+    ans.append(aps([z1, z2], [x1, x2], [y1, y2]))
+    between.extend(['P(x1,y1) = p(x1)p(y1|x1)/p(y1) = {}'.format(ans[5][0]),\
+                    'P(x2, y1) = {}'.format(ans[5][1]),\
+                    'P(x2, y1) = {}'.format(ans[5][2]),\
+                    'P(x1, y2) = {}'.format(ans[5][3]),\
+                    'P(x, y) != P(x) => {}, сделайте равновероятными'.format(ans[5][4])])
+    d = {'ans': ans, 'between': between}
+
+    return JsonResponse.success(d)
 
 
 @api_method(SecondTaskForm)
