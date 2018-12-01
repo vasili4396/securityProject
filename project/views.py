@@ -71,17 +71,20 @@ def first (request, form):
 
 @api_method(SecondTaskForm)
 def second_task(request, form):
-    l = form['l']
-    p = form['p']
+    l0 = form['l'][0]
+    l1 = form['l'][1]
+    l2 = form['l'][2]
+    l0, l1, l2 = Mod(l0, form['p']), Mod(l1, form['p']), Mod(l2, form['p'])
+    a = (1 // (l1 - l0)) * (l2 - l1)
+    b = l1 - a * l0
+    l3 = a * l2 + b
+    l4 = a * l3 + b
+    lis = ['a = (x1-x2)*(x2-x3)^-1 = {}'.format(a), \
+           'b = (x2-b)*x1^-1 = {}'.format(b), \
+           'x4 = a*x3 + b= {}'.format(l3), \
+           'x5 = a*x4 + b= {}'.format(l4)]
 
-    l = [Mod(i, p) for i in l]
-    a = (1 // (l[1] - l[0])) * (l[2] - l[1])
-    b = l[1] - a * l[0]
-    l.append(a * l[2] + b)
-    l.append(a * l[3] + b)
-    lis = ['a = {}, '.format(a), 'b = {}'.format(b)]
-    d = {'ans': 'x4={}, x5={}'.format(l[3], l[4]), 'between': lis}
-
+    d = {'ans': parse_mod((l3, l4)), 'between': lis}
     return JsonResponse.success(d)
 
 
