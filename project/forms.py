@@ -72,6 +72,6 @@ class ElipticForm(forms.Form):
     a = forms.IntegerField()
     b = forms.IntegerField()
     q = forms.IntegerField()
-    x = forms.IntegerField()
-    y = forms.IntegerField()
+    x = forms.IntegerField(required=False)
+    y = forms.IntegerField(required=False)
     n = forms.IntegerField(required=False)
