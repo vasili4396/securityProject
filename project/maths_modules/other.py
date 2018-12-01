@@ -1,5 +1,5 @@
 import numpy as np
-
+import itertools
 
 def modInv(a,p):          # Finds the inverse of a mod p, if it exists
     for i in range(1,p):
@@ -33,3 +33,12 @@ def modMatInv(A,p):       # Finds the inverse of matrix A mod p
         for j in range(0,n):
             adj[i][j]=((-1)**(i+j)*int(round(np.linalg.det(minor(A,j,i)))))%p
     return (modInv(int(round(np.linalg.det(A))),p)*adj)%p
+
+
+def prime_factors(n):
+    for i in itertools.chain([2], itertools.count(3, 2)):
+        if n <= 1:
+            break
+        while n % i == 0:
+            n //= i
+            yield i

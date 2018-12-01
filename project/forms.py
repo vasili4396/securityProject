@@ -59,8 +59,6 @@ class FifthTaskForm(forms.Form):
     n = forms.IntegerField()
     e = forms.IntegerField()
     c = forms.IntegerField()
-    p = forms.IntegerField()
-    q = forms.IntegerField()
 
 
 class ElipticForm(forms.Form):

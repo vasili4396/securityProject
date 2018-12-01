@@ -138,16 +138,15 @@ def fourth_task (request, form):
 
 @api_method(FifthTaskForm)
 def fifth_task(request, form):
-    n = form['n']
-    e = form['e']
-    c = form['c']
-    p = form['p']
-    q = form['q']
-
+    p, q = [i for i in prime_factors(form['n'])]
     f = (p-1)*(q-1)
-    d = 1//Mod(e, f)
-    ans = Mod(c**int(d), n)
-    d = {'ans': parse_mod(ans), 'between': [(parse_mod(d), f)]}
+    d = 1//Mod(form['e'], f)
+    ans = Mod(form['c']**int(d), form['n'])
+    d = {'ans': 'ans = c^d mod n = %s' % ans, 'between':['n = p*q = {}*{}'.format(p, q),\
+                                'f = (p-1)*(q-1) = %s' % f,\
+                                'd = e^-1 mod f = %s' % d,\
+                                'ans = c^d mod n = %s' % ans]}
+
     return JsonResponse.success(d)
 
 
