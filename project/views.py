@@ -165,8 +165,7 @@ def sixth_task(request, form):
     return JsonResponse.success(d)
 
 
-@api_method(SeventhTaskForm)
-def seventh_task(request, form):
+def cypher(request, form):
     g = Mod(form['g'], form ['p'])
     y = g**form['x']
     a = g**form['k']
@@ -176,6 +175,28 @@ def seventh_task(request, form):
                                 'b = M*y^k = %s' %b,\
                                 'ans = ({}, {})'.format(a, b)]}
     return JsonResponse.success(d)
+
+
+def sign(request, form):
+    g = Mod(form['g'], form['p'])
+    r = g**form['k']
+    r = Mod(int(r), form['p']-1)
+    s = (form['M'] - form['x']*r)*(1//Mod(form['k'], form['p']-1))
+    d = {'ans': '({}, {})'.format(r, s), 'between':['r = g^k mod p-1 = %s' % r,\
+                                's = (M - x*r)*(k)^-1 mod p-1 = %s' % s,\
+                                'ans = ({}, {})'.format(r, s)]}
+
+    return JsonResponse.success(d)
+
+
+@api_method(SeventhTaskForm)
+def seventh_task(request, form):
+    if form['task_id'] == 1:
+        return cypher(request, form)
+    elif form['task_id'] == 2:
+        return sign(request, form)
+    else:
+        return JsonResponse.internal_error()
 
 
 @api_method(ElipticForm)

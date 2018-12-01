@@ -84,3 +84,5 @@ class SeventhTaskForm(forms.Form):
     x = forms.IntegerField()
     M = forms.IntegerField()
     k = forms.IntegerField()
+    task_id = forms.IntegerField()
+
