@@ -17,4 +17,4 @@ simplegeneric==0.8.1
 six==1.11.0
 snowballstemmer==1.2.1
 sqlparse==0.2.4
-urllib3==1.23
+urllib3==1.26.5
